@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Ready Writer — Abbah's Pen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#B89A5A;--gl:#F7F0E0;--gb:#DBBE80;
+  --ink:#1A1410;--is:#5A4E3A;--if:#998C76;
+  --sf:#FDFAF4;--bdr:#E5D9C0;
+  --serif:'Playfair Display',Georgia,serif;
+  --body:'Crimson Pro',Georgia,serif;
+  --ab:#0F1117;--as:#1A1D27;--ab2:#252836;--ab3:#2E3145;
+  --ag:#C9A85C;--at:#E8E0D0;--am:#6B6558;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--body);background:var(--sf);color:var(--ink);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* SCREENS */
+.scr{display:none!important;}
+.scr.on{display:block!important;}
+#s-login.on{display:flex!important;}
+
+/* ── LOGIN ── */
+#s-login{min-height:100vh;background:var(--ab);align-items:center;justify-content:center;font-family:var(--body);}
+.lbox{background:var(--as);border:1px solid var(--ab2);border-radius:12px;padding:3rem 2.5rem;width:100%;max-width:400px;text-align:center;}
+.lcross{width:44px;height:44px;margin:0 auto 1.5rem;position:relative;}
+.lcross::before,.lcross::after{content:'';position:absolute;background:var(--ag);border-radius:2px;}
+.lcross::before{width:3px;height:44px;left:20px;}
+.lcross::after{width:44px;height:3px;top:20px;}
+.ltitle{font-family:var(--serif);font-size:1.6rem;color:var(--at);margin-bottom:0.25rem;font-weight:400;}
+.lsub{font-size:0.82rem;color:var(--am);margin-bottom:2rem;letter-spacing:0.08em;}
+.linput{width:100%;padding:0.85rem 1rem;background:var(--ab);border:1px solid var(--ab2);border-radius:6px;color:var(--at);font-family:var(--body);font-size:1rem;outline:none;margin-bottom:1rem;letter-spacing:0.1em;}
+.linput:focus{border-color:var(--ag);}
+.lbtn{width:100%;padding:0.9rem;background:var(--ag);color:var(--ab);border:none;border-radius:6px;font-family:var(--body);font-size:0.88rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;}
+.lbtn:hover{background:#D4AD60;}
+.lerr{color:#F87171;font-size:0.83rem;margin-top:0.5rem;display:none;}
+.lhint{margin-top:1.5rem;font-size:0.78rem;color:var(--am);}
+.lhint a{color:var(--ag);cursor:pointer;text-decoration:underline;}
+
+/* ── ADMIN ── */
+#s-admin{background:var(--ab);min-height:100vh;font-family:var(--body);}
+.anav{background:var(--as);border-bottom:1px solid var(--ab2);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100;}
+.alogo{font-family:var(--serif);font-size:0.95rem;color:var(--at);font-weight:400;}
+.alogo span{color:var(--ag);font-style:italic;}
+.anavlinks{display:flex;gap:0.25rem;}
+.anl{font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 0.85rem;border-radius:4px;cursor:pointer;color:var(--am);font-weight:600;transition:all 0.2s;border:none;background:transparent;font-family:var(--body);}
+.anl:hover{color:var(--at);}
+.anl.on{background:var(--ab2);color:var(--ag);}
+.alo{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--am);cursor:pointer;font-weight:600;padding:0.38rem 0.8rem;border:1px solid var(--ab2);border-radius:4px;background:transparent;font-family:var(--body);}
+.alo:hover{color:var(--at);}
+.abody{max-width:1080px;margin:0 auto;padding:2rem 1.5rem 6rem;}
+
+/* PANELS */
+.apanel{display:none;}.apanel.on{display:block;}
+
+/* DASH */
+.dwelcome{margin-bottom:2rem;}
+.dwelcome h2{font-family:var(--serif);font-size:1.9rem;color:var(--at);font-weight:400;margin-bottom:0.2rem;}
+.dwelcome p{font-size:0.9rem;color:var(--am);}
+.dstats{display:grid;grid-template-columns:repeat(4,1fr);gap:0.85rem;margin-bottom:2rem;}
+.dstat{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.1rem 1.25rem;}
+.dstat-n{font-family:var(--serif);font-size:2rem;color:var(--ag);font-weight:400;line-height:1;}
+.dstat-l{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--am);margin-top:0.3rem;font-weight:600;}
+.dactions{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;}
+.daction{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.5rem;cursor:pointer;transition:border-color 0.2s;}
+.daction:hover{border-color:var(--ag);}
+.dai{font-size:1.6rem;margin-bottom:0.6rem;}
+.dat{font-family:var(--serif);font-size:1rem;color:var(--at);margin-bottom:0.25rem;}
+.das{font-size:0.82rem;color:var(--am);line-height:1.5;}
+
+/* ARTICLE LIST */
+.phd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.phd h2{font-family:var(--serif);font-size:1.5rem;color:var(--at);font-weight:400;}
+.artlist{display:flex;flex-direction:column;gap:0.6rem;}
+.artrow{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.1rem 1.25rem;display:grid;grid-template-columns:56px 1fr auto;gap:1rem;align-items:center;}
+.artrow:hover{border-color:var(--ab3);}
+.artrow-th{width:56px;height:42px;object-fit:cover;border-radius:4px;}
+.artrow-th-ph{width:56px;height:42px;background:var(--ab2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;opacity:0.4;}
+.artrow-cat{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ag);font-weight:600;margin-bottom:0.15rem;}
+.artrow-title{font-family:var(--serif);font-size:0.95rem;color:var(--at);font-weight:400;}
+.artrow-meta{font-size:0.75rem;color:var(--am);margin-top:0.15rem;}
+.artrow-btns{display:flex;gap:0.4rem;}
+.empty-state{text-align:center;padding:3rem;color:var(--am);font-size:0.9rem;background:var(--as);border:1px dashed var(--ab2);border-radius:8px;}
+.empty-state strong{color:var(--ag);}
+
+/* EDITOR */
+#ed-view{display:none;}.#ed-view.on{display:block;}
+.ed-back{display:flex;align-items:center;gap:0.4rem;color:var(--am);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;cursor:pointer;margin-bottom:1.5rem;background:none;border:none;font-family:var(--body);padding:0;}
+.ed-back:hover{color:var(--at);}
+.edgrid{display:grid;grid-template-columns:1fr 320px;gap:1.5rem;}
+.edmain{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.75rem;}
+.edside{display:flex;flex-direction:column;gap:1rem;}
+.edscard{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.25rem;}
+.edscard h4{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--am);font-weight:600;margin-bottom:1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--ab2);}
+
+/* FORM */
+.fg{margin-bottom:1.1rem;}
+.fg label{display:block;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--am);font-weight:600;margin-bottom:0.35rem;}
+.fg input,.fg textarea,.fg select{width:100%;padding:0.65rem 0.85rem;background:var(--ab);border:1px solid var(--ab2);border-radius:6px;color:var(--at);font-family:var(--body);font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--ag);}
+.fg textarea{resize:vertical;line-height:1.6;}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--am);}
+.fg select option{background:var(--ab);}
+.bodyarea{min-height:300px;font-size:0.97rem!important;}
+.writetip{background:rgba(184,154,90,0.07);border:1px solid rgba(184,154,90,0.18);border-radius:6px;padding:0.8rem 1rem;font-size:0.79rem;color:var(--am);margin-bottom:1.1rem;line-height:1.6;}
+.writetip strong{color:var(--ag);}
+.writetip code{background:var(--ab2);padding:0.1rem 0.3rem;border-radius:3px;font-size:0.77rem;}
+
+/* IMAGE UPLOAD — FIXED */
+.upwrap{position:relative;}
+.upzone{border:2px dashed var(--ab3);border-radius:8px;padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--ab);overflow:hidden;}
+.upzone:hover{border-color:var(--ag);background:rgba(184,154,90,0.05);}
+.upzone input[type=file]{position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;}
+.upzone-icon{font-size:1.6rem;display:block;margin-bottom:0.4rem;pointer-events:none;}
+.upzone-txt{font-size:0.83rem;color:var(--am);pointer-events:none;}
+.upzone-sub{font-size:0.72rem;color:var(--ab3);margin-top:0.2rem;pointer-events:none;}
+.img-thumb{width:100%;height:140px;object-fit:cover;border-radius:6px;margin-top:0.75rem;border:1px solid var(--ab2);display:block;}
+.img-thumb.hide{display:none;}
+.img-remove{width:100%;margin-top:0.4rem;padding:0.38rem;background:transparent;border:1px solid #3D1A1A;border-radius:4px;color:#F87171;font-size:0.73rem;cursor:pointer;font-family:var(--body);display:block;}
+.img-remove.hide{display:none;}
+
+/* PROFILE UPLOAD */
+.profav{width:100px;height:100px;border-radius:50%;background:var(--ab2);border:3px solid var(--ag);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:2rem;color:var(--ag);overflow:hidden;margin:0 auto 0.75rem;}
+.profav img{width:100%;height:100%;object-fit:cover;display:none;}
+.profav img.show{display:block;}
+.profgrid{display:grid;grid-template-columns:180px 1fr;gap:1.5rem;align-items:start;}
+.profcard{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.5rem;text-align:center;}
+.profcard h4{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--am);font-weight:600;margin-bottom:1rem;}
+.proffields{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.5rem;}
+.proffields h3{font-family:var(--serif);font-size:1.1rem;color:var(--at);font-weight:400;margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:1px solid var(--ab2);}
+
+/* SETTINGS */
+.setcard{background:var(--as);border:1px solid var(--ab2);border-radius:8px;padding:1.5rem;margin-bottom:1.25rem;}
+.setcard h3{font-family:var(--serif);font-size:1.05rem;color:var(--at);font-weight:400;margin-bottom:1.1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--ab2);}
+
+/* BUTTONS */
+.btn{padding:0.62rem 1.2rem;border-radius:6px;font-family:var(--body);font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;border:none;}
+.btn-gold{background:var(--ag);color:var(--ab);}
+.btn-gold:hover{background:#D4AD60;}
+.btn-ghost{background:transparent;color:var(--am);border:1px solid var(--ab2);}
+.btn-ghost:hover{color:var(--at);border-color:var(--am);}
+.btn-red{background:transparent;color:#F87171;border:1px solid #3D1A1A;}
+.btn-red:hover{background:#3D1A1A;}
+.savedmsg{font-size:0.8rem;color:#4ADE80;margin-left:0.75rem;display:none;}
+.errmsg{font-size:0.8rem;color:#F87171;margin-left:0.75rem;display:none;}
+
+/* ── PUBLIC BLOG ── */
+#s-blog{}
+.ppg{display:none;}.ppg.on{display:block;}
+.pnav{background:var(--sf);border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:50;}
+.pnav-in{max-width:1120px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.plogo{font-family:var(--serif);font-size:1.1rem;font-weight:500;letter-spacing:0.06em;color:var(--ink);cursor:pointer;}
+.plogo span{color:var(--gold);}
+.pnavlinks{display:flex;gap:2.5rem;}
+.pnavlinks a{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--is);font-weight:600;cursor:pointer;transition:color 0.2s;}
+.pnavlinks a:hover{color:var(--gold);}
+.psub{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--ink);color:var(--gl);padding:0.5rem 1.1rem;border-radius:2px;font-weight:600;cursor:pointer;}
+.psub:hover{background:var(--gold);color:#fff;}
+.adminico{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--if);cursor:pointer;font-weight:600;padding:0.35rem 0.7rem;border:1px solid var(--bdr);border-radius:3px;}
+.adminico:hover{color:var(--gold);border-color:var(--gold);}
+.pw{max-width:1120px;margin:0 auto;padding:0 2rem;}
+.slbl{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+
+/* HERO */
+.phero{text-align:center;padding:5.5rem 2rem 4.5rem;border-bottom:1px solid var(--bdr);animation:fu 0.8s ease both;}
+@keyframes fu{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.phero .slbl{display:block;margin-bottom:1.5rem;}
+.ph1{font-family:var(--serif);font-size:clamp(3.5rem,8vw,7rem);font-weight:400;line-height:1.0;color:var(--ink);letter-spacing:-0.02em;}
+.ph1 em{font-style:italic;color:var(--gold);}
+.ptag{font-family:var(--body);font-size:1.15rem;font-style:italic;color:var(--is);margin-top:1.2rem;}
+.orn{display:flex;align-items:center;justify-content:center;gap:1.2rem;margin:2rem auto 0;max-width:260px;}
+.orn hr{flex:1;border:none;border-top:1px solid var(--gb);}
+.oc{width:16px;height:16px;position:relative;}
+.oc::before,.oc::after{content:'';position:absolute;background:var(--gold);border-radius:1px;}
+.oc::before{width:2px;height:16px;left:7px;}
+.oc::after{width:16px;height:2px;top:7px;}
+
+/* SCRIPTURE */
+.pscrip{background:var(--ink);padding:2rem;text-align:center;}
+.pscrip blockquote{font-family:var(--body);font-size:1.05rem;font-style:italic;color:var(--gl);max-width:700px;margin:0 auto;line-height:1.8;}
+.pscrip cite{display:block;margin-top:0.6rem;font-size:0.78rem;font-style:normal;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);}
+
+/* SECTION HEAD */
+.pshd{display:flex;align-items:center;justify-content:space-between;padding:2.5rem 0 1.5rem;border-bottom:1px solid var(--bdr);margin-bottom:2.5rem;}
+.seeall{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);font-weight:600;cursor:pointer;}
+
+/* FEATURED */
+.fwrap{padding-bottom:3rem;border-bottom:1px solid var(--bdr);}
+.flead{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--bdr);}
+.fimg{aspect-ratio:4/3;background:var(--gl);border:1px solid var(--gb);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;cursor:pointer;}
+.fimg img{width:100%;height:100%;object-fit:cover;}
+.fimgph{font-size:3rem;opacity:0.2;}
+.fimlbl{position:absolute;bottom:0;left:0;right:0;background:var(--ink);color:var(--gl);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;padding:0.45rem 1rem;font-weight:600;}
+.fcat{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;display:block;margin-bottom:0.9rem;}
+.ftitle{font-family:var(--serif);font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:400;line-height:1.18;color:var(--ink);margin-bottom:1rem;cursor:pointer;transition:color 0.2s;}
+.ftitle:hover{color:var(--gold);}
+.fexc{font-size:1.05rem;color:var(--is);line-height:1.8;margin-bottom:1.3rem;}
+.fmeta{font-size:0.82rem;color:var(--if);display:flex;gap:0.8rem;align-items:center;}
+.fmeta .dot{color:var(--gold);}
+.rlnk{display:inline-block;margin-top:1.4rem;font-size:0.78rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink);border-bottom:1.5px solid var(--gold);padding-bottom:3px;font-weight:600;cursor:pointer;}
+.rlnk:hover{color:var(--gold);}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;}
+.pcard{border-top:1px solid var(--bdr);padding-top:1.4rem;cursor:pointer;}
+.pcard:hover .ftitle{color:var(--gold);}
+.cimg{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:3px;margin-bottom:0.75rem;border:1px solid var(--bdr);}
+.cimgph{width:100%;aspect-ratio:16/9;background:var(--gl);border:1px solid var(--bdr);border-radius:3px;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;opacity:0.3;}
+.pcard .ftitle{font-size:1.15rem;}
+.pcard .fexc{font-size:0.95rem;}
+
+/* CATS */
+.pcats{padding:3.5rem 0;border-bottom:1px solid var(--bdr);}
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--bdr);border-radius:3px;overflow:hidden;margin-top:2rem;}
+.catcell{padding:2rem 1.5rem;text-align:center;border-right:1px solid var(--bdr);cursor:pointer;transition:background 0.2s;background:#fff;}
+.catcell:last-child{border-right:none;}
+.catcell:hover{background:var(--gl);}
+.catsym{font-size:1.6rem;display:block;margin-bottom:0.8rem;}
+.catnm{font-family:var(--serif);font-size:1.05rem;font-weight:500;color:var(--ink);margin-bottom:0.2rem;}
+.catcnt{font-size:0.82rem;color:var(--if);}
+
+/* ABOUT + NL */
+.abnl{display:grid;grid-template-columns:1fr 1fr;gap:4rem;padding:3.5rem 0;border-bottom:1px solid var(--bdr);}
+.ablbl{font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--if);font-weight:600;display:block;margin-bottom:1.4rem;padding-bottom:1rem;border-bottom:1px solid var(--bdr);}
+.abav{width:90px;height:90px;border-radius:50%;background:var(--gl);border:2px solid var(--gb);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.8rem;color:var(--gold);font-weight:500;overflow:hidden;margin-bottom:1.2rem;}
+.abav img{width:100%;height:100%;object-fit:cover;}
+.abnm{font-family:var(--serif);font-size:1.4rem;font-weight:500;margin-bottom:0.2rem;}
+.abrole{font-size:0.78rem;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:1rem;}
+.abbio{font-size:0.98rem;color:var(--is);line-height:1.85;}
+.nlbox{background:var(--ink);border-radius:3px;padding:2.5rem;align-self:start;}
+.nlbox .slbl{color:var(--gold);display:block;margin-bottom:1rem;}
+.nlh{font-family:var(--serif);font-size:1.5rem;font-weight:400;line-height:1.25;color:var(--gl);margin-bottom:0.7rem;}
+.nls{font-size:0.95rem;color:var(--if);line-height:1.7;margin-bottom:1.6rem;}
+.nlinp{width:100%;padding:0.8rem 1rem;background:rgba(255,255,255,0.07);border:1px solid rgba(184,154,90,0.4);border-radius:2px;color:var(--gl);font-family:var(--body);font-size:1rem;margin-bottom:0.7rem;outline:none;}
+.nlinp::placeholder{color:var(--if);}
+.nlinp:focus{border-color:var(--gold);}
+.nlbtn{width:100%;padding:0.85rem;background:var(--gold);border:none;border-radius:2px;color:var(--ink);font-family:var(--body);font-size:0.82rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;}
+.nlbtn:hover{background:#D4AD60;}
+
+/* FOOTER */
+.pft{border-top:1px solid var(--bdr);padding:2.5rem 0;display:flex;align-items:center;justify-content:space-between;}
+.ftlogo{font-family:var(--serif);font-size:1.05rem;color:var(--is);}
+.ftlogo span{color:var(--gold);font-style:italic;}
+.ftcp{font-size:0.78rem;color:var(--if);}
+.ftlinks{display:flex;gap:1.5rem;}
+.ftlinks a{font-size:0.73rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--if);cursor:pointer;}
+.ftlinks a:hover{color:var(--gold);}
+
+/* ARCHIVE */
+.archero{padding:4rem 0 3rem;border-bottom:1px solid var(--bdr);text-align:center;}
+.archero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--ink);margin-top:0.75rem;}
+.archero h1 em{font-style:italic;color:var(--gold);}
+.archero p{font-size:1.05rem;color:var(--is);margin-top:0.6rem;font-style:italic;}
+.filbar{display:flex;gap:0.5rem;flex-wrap:wrap;padding:1.5rem 0;border-bottom:1px solid var(--bdr);}
+.filbtn{font-size:0.73rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.42rem 1rem;border:1px solid var(--bdr);border-radius:2px;background:transparent;color:var(--is);cursor:pointer;font-family:var(--body);font-weight:600;transition:all 0.2s;}
+.filbtn:hover,.filbtn.on{background:var(--ink);color:var(--gl);border-color:var(--ink);}
+.arclist{padding:1.5rem 0;}
+.arcrow{display:grid;grid-template-columns:110px 1fr auto;gap:1.75rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid var(--bdr);cursor:pointer;transition:opacity 0.2s;}
+.arcrow:hover{opacity:0.72;}
+.arcrow:hover .arctitle{color:var(--gold);}
+.arcth{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;border:1px solid var(--bdr);}
+.arcthph{width:100%;aspect-ratio:4/3;background:var(--gl);border-radius:3px;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-size:1.5rem;opacity:0.3;}
+.arccat{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.45rem;display:block;}
+.arctitle{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--ink);margin-bottom:0.35rem;line-height:1.25;transition:color 0.2s;}
+.arcexc{font-size:0.9rem;color:var(--is);line-height:1.6;}
+.arcdate{font-size:0.8rem;color:var(--if);margin-top:0.3rem;}
+.arcrd{font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--if);white-space:nowrap;font-weight:600;}
+
+/* ARTICLE */
+.artback{padding:1.2rem 0;border-bottom:1px solid var(--bdr);}
+.backbtn{font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--is);font-weight:600;cursor:pointer;transition:color 0.2s;}
+.backbtn:hover{color:var(--gold);}
+.arthero{padding:4rem 0 3rem;text-align:center;border-bottom:1px solid var(--bdr);}
+.arthero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.8rem);font-weight:400;line-height:1.12;color:var(--ink);max-width:780px;margin:.75rem auto 1.2rem;letter-spacing:-0.01em;}
+.arthero h1 em{font-style:italic;}
+.byline{margin-top:0.5rem;font-size:0.88rem;color:var(--is);}
+.byline strong{color:var(--gold);}
+.artcover{max-width:860px;margin:3rem auto;border-radius:3px;overflow:hidden;border:1px solid var(--bdr);}
+.artcover img{width:100%;max-height:480px;object-fit:cover;display:block;}
+.artcoverph{width:100%;aspect-ratio:16/9;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:0.2;}
+.artbody{max-width:680px;margin:0 auto;padding:2rem 0 4rem;}
+.artbody p{font-size:1.15rem;line-height:1.9;color:var(--ink);margin-bottom:1.6rem;}
+.artbody p:first-of-type::first-letter{font-family:var(--serif);font-size:4rem;float:left;line-height:0.8;margin:0.12em 0.12em 0 0;color:var(--gold);font-weight:500;}
+.artbody h2{font-family:var(--serif);font-size:1.65rem;font-weight:400;color:var(--ink);margin:2.5rem 0 1rem;line-height:1.3;}
+.artbody blockquote{border-left:3px solid var(--gold);padding:0.5rem 1.5rem;margin:2rem 0;background:var(--gl);}
+.artbody blockquote p{font-style:italic;font-size:1.2rem;color:var(--is);margin:0;}
+.artbody blockquote p::first-letter{all:unset;}
+.arttags{max-width:680px;margin:0 auto 2rem;display:flex;gap:0.5rem;flex-wrap:wrap;}
+.tag{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.3rem 0.8rem;border:1px solid var(--gb);color:var(--gold);border-radius:2px;font-weight:600;}
+.artauthor{max-width:680px;margin:0 auto 4rem;padding:2rem;background:var(--ink);border-radius:3px;display:flex;align-items:center;gap:1.5rem;}
+.aaav{width:64px;height:64px;border-radius:50%;flex-shrink:0;background:rgba(184,154,90,0.25);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.1rem;color:var(--gold);font-weight:500;overflow:hidden;}
+.aaav img{width:100%;height:100%;object-fit:cover;}
+.aanm{font-family:var(--serif);font-size:1.1rem;color:var(--gl);margin-bottom:0.2rem;}
+.aabio{font-size:0.9rem;color:var(--if);line-height:1.65;}
+.moresec{border-top:1px solid var(--bdr);padding:3rem 0;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .flead,.abnl,.dstats,.dactions,.profgrid,.edgrid{grid-template-columns:1fr!important;}
+  .pcards{grid-template-columns:1fr;}
+  .catgrid{grid-template-columns:1fr 1fr;}
+  .catcell:nth-child(2){border-right:none;}
+  .catcell{border-bottom:1px solid var(--bdr);}
+  .arcrow{grid-template-columns:1fr;gap:0.5rem;}
+  .arcrd,.arcth,.arcthph{display:none;}
+  .pnavlinks{display:none;}
+  .pft{flex-direction:column;gap:1rem;text-align:center;}
+  .ftlinks{justify-content:center;}
+  .anavlinks{gap:0.1rem;}
+  .anl{font-size:0.65rem;padding:0.3rem 0.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="s-login" class="scr on">
+  <div class="lbox">
+    <div class="lcross"></div>
+    <div class="ltitle">Ready Writer</div>
+    <div class="lsub">Admin Dashboard</div>
+    <label class="login-label" style="display:block;text-align:left;font-size:0.73rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--am);font-weight:600;margin-bottom:0.4rem;">Password</label>
+    <input class="linput" type="password" id="pwin" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="lbtn" onclick="doLogin()">Enter Dashboard</button>
+    <div class="lerr" id="lerr">Incorrect password. Try again.</div>
+    <div class="lhint">Just reading? <a onclick="goBlog()">Go to the blog →</a></div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN ═══ -->
+<div id="s-admin" class="scr">
+  <nav class="anav">
+    <div class="alogo">Ready <span>Writer</span> — Dashboard</div>
+    <div class="anavlinks">
+      <button class="anl on" onclick="showP('dash')">Home</button>
+      <button class="anl" onclick="showP('articles')">Articles</button>
+      <button class="anl" onclick="showP('profile')">Profile</button>
+      <button class="anl" onclick="showP('settings')">Settings</button>
+      <button class="anl" style="color:var(--ag);" onclick="goBlog()">View Blog →</button>
+    </div>
+    <button class="alo" onclick="doLogout()">Log Out</button>
+  </nav>
+  <div class="abody">
+
+    <!-- DASH -->
+    <div id="panel-dash" class="apanel on">
+      <div class="dwelcome">
+        <h2>Welcome back, <span id="dname">Davina</span> ✦</h2>
+        <p>Your blog is live. Write something new this week.</p>
+      </div>
+      <div class="dstats">
+        <div class="dstat"><div class="dstat-n" id="st0">0</div><div class="dstat-l">Total Articles</div></div>
+        <div class="dstat"><div class="dstat-n" id="st1">0</div><div class="dstat-l">Scripture Studies</div></div>
+        <div class="dstat"><div class="dstat-n" id="st2">0</div><div class="dstat-l">Reflections</div></div>
+        <div class="dstat"><div class="dstat-n" id="st3">0</div><div class="dstat-l">Essays &amp; Prayers</div></div>
+      </div>
+      <div class="dactions">
+        <div class="daction" onclick="newArt()"><div class="dai">✍️</div><div class="dat">Write New Article</div><div class="das">Start a new scripture study, reflection, essay or prayer.</div></div>
+        <div class="daction" onclick="showP('profile')"><div class="dai">👤</div><div class="dat">Edit Profile &amp; Photo</div><div class="das">Update your name, bio and profile picture.</div></div>
+        <div class="daction" onclick="showP('articles')"><div class="dai">📋</div><div class="dat">Manage Articles</div><div class="das">Edit or delete your existing articles.</div></div>
+        <div class="daction" onclick="showP('settings')"><div class="dai">⚙️</div><div class="dat">Settings &amp; Download</div><div class="das">Change tagline, scripture, password, and download your blog.</div></div>
+      </div>
+    </div>
+
+    <!-- ARTICLES -->
+    <div id="panel-articles" class="apanel">
+      <div id="artlistview">
+        <div class="phd"><h2 style="font-family:var(--serif);font-size:1.5rem;color:var(--at);font-weight:400;">Articles</h2><button class="btn btn-gold" onclick="newArt()">+ New Article</button></div>
+        <div class="artlist" id="artlist"></div>
+      </div>
+      <div id="edview" style="display:none;">
+        <button class="ed-back" onclick="closeEd()">← Back to Articles</button>
+        <div class="edgrid">
+          <div class="edmain">
+            <div class="fg"><label>Article Title</label><input id="etitle" type="text" placeholder="Your article title"/></div>
+            <div class="writetip"><strong>Formatting:</strong> Blank line between paragraphs &nbsp;·&nbsp; <code>## </code> for subheading &nbsp;·&nbsp; <code>&gt; </code> for scripture quote &nbsp;·&nbsp; <code>*word*</code> for italic</div>
+            <div class="fg"><label>Write Your Article</label><textarea id="ebody" class="bodyarea" placeholder="Write your full article here...&#10;&#10;Each paragraph needs a blank line between them.&#10;&#10;## This becomes a subheading&#10;&#10;&gt; This becomes a pull quote or scripture"></textarea></div>
+          </div>
+          <div class="edside">
+            <div class="edscard">
+              <h4>Details</h4>
+              <div class="fg"><label>Category</label><select id="ecat"><option>Scripture Studies</option><option>Reflections</option><option>Essays</option><option>Prayers</option></select></div>
+              <div class="fg"><label>Date</label><input id="edate" type="text" placeholder="e.g. April 14, 2026"/></div>
+              <div class="fg"><label>Read Time</label><input id="eread" type="text" placeholder="e.g. 5 min read"/></div>
+              <div class="fg"><label>Short Excerpt (for cards)</label><textarea id="eexc" style="min-height:75px;" placeholder="A short preview of this article..."></textarea></div>
+              <div class="fg"><label>Tags (comma separated)</label><input id="etags" type="text" placeholder="Faith, Grace, Trust"/></div>
+            </div>
+            <div class="edscard">
+              <h4>Cover Photo</h4>
+              <div class="upwrap">
+                <div class="upzone" id="covzone">
+                  <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" id="covinput"/>
+                  <span class="upzone-icon">📸</span>
+                  <div class="upzone-txt">Click here to choose a photo</div>
+                  <div class="upzone-sub">JPG · PNG · WEBP</div>
+                </div>
+                <img id="covpreview" class="img-thumb hide" alt="Cover preview"/>
+                <button class="img-remove hide" id="covremove" onclick="removeImg()">✕ Remove photo</button>
+              </div>
+            </div>
+            <div style="display:flex;gap:0.6rem;">
+              <button class="btn btn-gold" style="flex:1;" onclick="saveArt()">✓ Publish Article</button>
+              <button class="btn btn-ghost" onclick="closeEd()">Cancel</button>
+            </div>
+            <div id="esavemsg" style="font-size:0.8rem;color:#4ADE80;text-align:center;margin-top:0.5rem;display:none;">✓ Article published!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="panel-profile" class="apanel">
+      <div class="phd"><h2 style="font-family:var(--serif);font-size:1.5rem;color:var(--at);font-weight:400;">Your Profile</h2></div>
+      <div class="profgrid">
+        <div class="profcard">
+          <div class="profav" id="profav">
+            <span id="profinit">DT</span>
+            <img id="profimg" alt="Profile photo"/>
+          </div>
+          <h4 style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--am);font-weight:600;margin-bottom:0.75rem;">Profile Photo</h4>
+          <div class="upwrap">
+            <div class="upzone" id="profzone" style="padding:1rem;">
+              <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" id="profinput"/>
+              <span class="upzone-icon" style="font-size:1.3rem;">🖼</span>
+              <div class="upzone-txt" style="font-size:0.78rem;">Click to choose</div>
+            </div>
+            <img id="profprev" class="img-thumb hide" style="border-radius:50%;height:80px;object-fit:cover;" alt=""/>
+            <button class="img-remove hide" id="profremove" onclick="removeProf()">✕ Remove</button>
+          </div>
+        </div>
+        <div class="proffields">
+          <h3>About You</h3>
+          <div class="fg"><label>Your Full Name</label><input id="pname" type="text" placeholder="Davina Taddy"/></div>
+          <div class="fg"><label>Your Role / Tagline</label><input id="prole" type="text" placeholder="Writer · Worshipper · Believer"/></div>
+          <div class="fg"><label>Your Bio</label><textarea id="pbio" style="min-height:130px;" placeholder="Tell your readers who you are and why you write..."></textarea></div>
+          <button class="btn btn-gold" onclick="saveProfile()">Save Profile</button>
+          <span class="savedmsg" id="psaved">✓ Saved!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="panel-settings" class="apanel">
+      <div class="phd"><h2 style="font-family:var(--serif);font-size:1.5rem;color:var(--at);font-weight:400;">Settings</h2></div>
+      <div class="setcard">
+        <h3>Blog Identity</h3>
+        <div class="fg"><label>Tagline</label><input id="stag" type="text" placeholder="Abbah's pen."/></div>
+        <div class="fg"><label>Scripture Text</label><textarea id="ssc" style="min-height:75px;"></textarea></div>
+        <div class="fg"><label>Scripture Reference</label><input id="sref" type="text" placeholder="Psalm 45:1 — NKJV"/></div>
+        <button class="btn btn-gold" onclick="saveSettings()">Save</button>
+        <span class="savedmsg" id="ssaved">✓ Saved!</span>
+      </div>
+      <div class="setcard">
+        <h3>Newsletter</h3>
+        <div class="fg"><label>Heading</label><input id="snlh" type="text"/></div>
+        <div class="fg"><label>Description</label><textarea id="snls" style="min-height:65px;"></textarea></div>
+        <button class="btn btn-gold" onclick="saveSettings()">Save</button>
+      </div>
+      <div class="setcard">
+        <h3>Change Password</h3>
+        <div class="fg"><label>Current Password</label><input id="pwcur" type="password" placeholder="Current password"/></div>
+        <div class="fg"><label>New Password</label><input id="pwnew" type="password" placeholder="New password (min 6 chars)"/></div>
+        <div class="fg"><label>Confirm New Password</label><input id="pwcon" type="password" placeholder="Confirm new password"/></div>
+        <button class="btn btn-gold" onclick="changePw()">Change Password</button>
+        <span id="pwmsg" style="font-size:0.8rem;margin-left:0.75rem;display:none;"></span>
+      </div>
+      <div class="setcard">
+        <h3>Save &amp; Download Blog</h3>
+        <p style="font-size:0.88rem;color:var(--am);margin-bottom:1rem;line-height:1.6;">Download your complete blog with all articles, photos and settings saved inside. Open the downloaded file in any browser to view your blog, or upload it to a website host to share it online.</p>
+        <button class="btn btn-gold" onclick="dlBlog()">💾 Download My Blog</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PUBLIC BLOG ═══ -->
+<div id="s-blog" class="scr">
+  <nav class="pnav">
+    <div class="pnav-in">
+      <div class="plogo" onclick="pgo('home')">The Ready <span>Writer</span></div>
+      <div class="pnavlinks">
+        <a onclick="pfil('Scripture Studies')">Scripture Studies</a>
+        <a onclick="pfil('Reflections')">Reflections</a>
+        <a onclick="pfil('Essays')">Essays</a>
+        <a onclick="pfil('Prayers')">Prayers</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="psub" onclick="pgoNL()">Subscribe</div>
+        <div class="adminico" onclick="goAdmin()" title="Admin login">⚙</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div id="p-home" class="ppg on">
+    <section class="phero">
+      <div class="pw">
+        <span class="slbl">A Christian writing blog</span>
+        <h1 class="ph1">The Ready<br><em>Writer</em></h1>
+        <p class="ptag" id="ptag">Abbah's pen.</p>
+        <div class="orn"><hr/><div class="oc"></div><hr/></div>
+      </div>
+    </section>
+    <div class="pscrip">
+      <blockquote><span id="psctext"></span><cite id="pscref"></cite></blockquote>
+    </div>
+    <div class="pw">
+      <div class="pshd"><span class="slbl">Featured Articles</span><span class="seeall" onclick="pgo('archive')">View all →</span></div>
+      <div class="fwrap">
+        <div class="flead" id="plead"></div>
+        <div class="pcards" id="pcards"></div>
+      </div>
+      <div class="pcats">
+        <span class="slbl">Browse by Category</span>
+        <div class="catgrid">
+          <div class="catcell" onclick="pfil('Scripture Studies')"><span class="catsym">📖</span><div class="catnm">Scripture Studies</div><div class="catcnt" id="cc0">0 articles</div></div>
+          <div class="catcell" onclick="pfil('Reflections')"><span class="catsym">🕊</span><div class="catnm">Reflections</div><div class="catcnt" id="cc1">0 articles</div></div>
+          <div class="catcell" onclick="pfil('Essays')"><span class="catsym">🖋</span><div class="catnm">Essays</div><div class="catcnt" id="cc2">0 articles</div></div>
+          <div class="catcell" onclick="pfil('Prayers')"><span class="catsym">🙏</span><div class="catnm">Prayers</div><div class="catcnt" id="cc3">0 articles</div></div>
+        </div>
+      </div>
+      <div class="abnl">
+        <div>
+          <span class="ablbl">About the Writer</span>
+          <div class="abav" id="pabav"><span id="pabinit">DT</span><img id="pabimg" src="" alt="" style="display:none;"/></div>
+          <div class="abnm" id="pabnm">Davina Taddy</div>
+          <div class="abrole" id="pabrole">Writer · Worshipper · Believer</div>
+          <p class="abbio" id="pabbio">Add your bio in the dashboard.</p>
+        </div>
+        <div class="nlbox" id="pnlbox">
+          <span class="slbl">Newsletter</span>
+          <h3 class="nlh" id="pnlh">Words delivered to your inbox</h3>
+          <p class="nls" id="pnls">New articles sent weekly, penned with love.</p>
+          <input class="nlinp" type="text" placeholder="Your name" style="margin-bottom:0.6rem;"/>
+          <input class="nlinp" type="email" placeholder="Your email address"/>
+          <button class="nlbtn" onclick="doSub()">Subscribe — it's free</button>
+        </div>
+      </div>
+    </div>
+    <div class="pw"><footer class="pft"><div class="ftlogo">The Ready <span>Writer</span></div><div class="ftlinks"><a onclick="pgo('archive')">Archive</a><a onclick="pgoNL()">Newsletter</a></div><div class="ftcp" id="pftcp">© 2026 Davina Taddy</div></footer></div>
+  </div>
+
+  <!-- ARCHIVE -->
+  <div id="p-archive" class="ppg">
+    <div class="pw">
+      <div class="archero"><span class="slbl">All Writing</span><h1>The <em>Archive</em></h1><p>Every word written in faith, for the glory of God.</p></div>
+      <div class="filbar">
+        <button class="filbtn on" onclick="psetfil('All',this)">All</button>
+        <button class="filbtn" onclick="psetfil('Scripture Studies',this)">Scripture Studies</button>
+        <button class="filbtn" onclick="psetfil('Reflections',this)">Reflections</button>
+        <button class="filbtn" onclick="psetfil('Essays',this)">Essays</button>
+        <button class="filbtn" onclick="psetfil('Prayers',this)">Prayers</button>
+      </div>
+      <div class="arclist" id="parclist"></div>
+      <footer class="pft"><div class="ftlogo">The Ready <span>Writer</span></div><div class="ftlinks"><a onclick="pgo('home')">Home</a></div><div class="ftcp">© 2026 Davina Taddy</div></footer>
+    </div>
+  </div>
+
+  <!-- ARTICLE -->
+  <div id="p-article" class="ppg">
+    <div class="pw">
+      <div class="artback"><span class="backbtn" onclick="pgoback()">← Back</span></div>
+      <div class="arthero">
+        <span class="fcat" id="pacat"></span>
+        <h1 id="patitle"></h1>
+        <div class="fmeta" style="justify-content:center;margin-top:1rem;"><span id="padate"></span><span class="dot">·</span><span id="paread"></span></div>
+        <div class="byline">By <strong id="paauthor">Davina Taddy</strong></div>
+      </div>
+      <div class="artcover" id="pacover"></div>
+      <div class="artbody" id="pabody"></div>
+      <div class="arttags" id="patags"></div>
+      <div class="artauthor"><div class="aaav" id="paaav"></div><div><div class="aanm" id="paanm"></div><div class="aabio" id="paabio"></div></div></div>
+      <div class="moresec"><div class="pshd"><span class="slbl">More Articles</span><span class="seeall" onclick="pgo('archive')">View all →</span></div><div class="pcards" id="pmore"></div></div>
+      <footer class="pft"><div class="ftlogo">The Ready <span>Writer</span></div><div class="ftlinks"><a onclick="pgo('home')">Home</a><a onclick="pgo('archive')">Archive</a></div><div class="ftcp">© 2026 Davina Taddy</div></footer>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════
+   STORAGE — saves everything automatically
+════════════════════════════ */
+const STORE_KEY = 'readywriter_data';
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    password: 'readywriter2026',
+    tagline: "Abbah's pen.",
+    scripture: '"My heart is overflowing with a good theme; I recite my composition concerning the King; my tongue is the pen of a ready writer."',
+    scriptureRef: 'Psalm 45:1 — NKJV',
+    nlH: 'Words delivered to your inbox',
+    nlS: 'New articles sent weekly, penned with love.',
+    authorName: 'Davina Taddy',
+    authorRole: 'Writer · Worshipper · Believer',
+    authorBio: '',
+    authorPhoto: '',
+    articles: []
+  };
+}
+
+function saveData() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(D)); } catch(e) {}
+}
+
+let D = loadData();
+let curIdx = -1;
+let pprev = 'home';
+let pcurIdx = 0;
+let pendingCover = '';
+
+/* ════════════════════════════
+   AUTH
+════════════════════════════ */
+function doLogin() {
+  const v = document.getElementById('pwin').value;
+  if (v === D.password) {
+    document.getElementById('pwin').value = '';
+    document.getElementById('lerr').style.display = 'none';
+    swScreen('admin');
+    refreshDash();
+    loadSettingsForm();
+    loadProfileForm();
+  } else {
+    document.getElementById('lerr').style.display = 'block';
+    document.getElementById('pwin').value = '';
+    document.getElementById('pwin').focus();
+  }
+}
+function doLogout() { swScreen('login'); }
+function goBlog() { swScreen('blog'); renderBlog(); }
+function goAdmin() { swScreen('login'); }
+
+function swScreen(name) {
+  ['login','admin','blog'].forEach(s => {
+    const el = document.getElementById('s-'+s);
+    if (name === s) el.classList.add('on');
+    else el.classList.remove('on');
+  });
+}
+
+/* ════════════════════════════
+   ADMIN PANELS
+════════════════════════════ */
+function showP(name) {
+  document.querySelectorAll('.apanel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.anl').forEach(b => b.classList.remove('on'));
+  document.getElementById('panel-'+name).classList.add('on');
+  // highlight correct nav button
+  const labels = {dash:'Home',articles:'Articles',profile:'Profile',settings:'Settings'};
+  document.querySelectorAll('.anl').forEach(b => { if(b.textContent.trim()===labels[name]) b.classList.add('on'); });
+  if (name==='articles') { closeEd(); renderArtList(); }
+  if (name==='profile') loadProfileForm();
+  if (name==='settings') loadSettingsForm();
+}
+
+function refreshDash() {
+  const first = (D.authorName||'Davina').split(' ')[0];
+  t('dname', first);
+  t('st0', D.articles.length);
+  t('st1', D.articles.filter(a=>a.cat==='Scripture Studies').length);
+  t('st2', D.articles.filter(a=>a.cat==='Reflections').length);
+  t('st3', D.articles.filter(a=>a.cat==='Essays'||a.cat==='Prayers').length);
+}
+
+/* ════════════════════════════
+   ARTICLE LIST
+════════════════════════════ */
+function renderArtList() {
+  const el = document.getElementById('artlist');
+  if (!D.articles.length) {
+    el.innerHTML = `<div class="empty-state">No articles yet.<br>Click <strong>+ New Article</strong> to write your first piece.</div>`;
+    return;
+  }
+  el.innerHTML = D.articles.map((a,i) => `
+    <div class="artrow">
+      ${a.cover ? `<img class="artrow-th" src="${a.cover}" alt=""/>` : `<div class="artrow-th-ph">✝</div>`}
+      <div>
+        <div class="artrow-cat">${a.cat}</div>
+        <div class="artrow-title">${a.title||'Untitled'}</div>
+        <div class="artrow-meta">${a.date||'No date'} ${a.read?'· '+a.read:''}</div>
+      </div>
+      <div class="artrow-btns">
+        <button class="btn btn-ghost" style="font-size:0.72rem;padding:0.38rem 0.8rem;" onclick="editArt(${i})">Edit</button>
+        <button class="btn btn-red" style="font-size:0.72rem;padding:0.38rem 0.8rem;" onclick="delArt(${i})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ════════════════════════════
+   ARTICLE EDITOR
+════════════════════════════ */
+function newArt() {
+  showP('articles');
+  curIdx = -1;
+  pendingCover = '';
+  // clear form
+  ['etitle','edate','eread','eexc','etags','ebody'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('ecat').value = 'Scripture Studies';
+  hideCoverPreview();
+  openEd();
+}
+
+function editArt(i) {
+  showP('articles');
+  curIdx = i;
+  pendingCover = '';
+  const a = D.articles[i];
+  document.getElementById('etitle').value = a.title||'';
+  document.getElementById('ecat').value = a.cat||'Scripture Studies';
+  document.getElementById('edate').value = a.date||'';
+  document.getElementById('eread').value = a.read||'';
+  document.getElementById('eexc').value = a.excerpt||'';
+  document.getElementById('etags').value = (a.tags||[]).join(', ');
+  document.getElementById('ebody').value = rawBody(a.body||'');
+  pendingCover = a.cover||'';
+  if (a.cover) showCoverPreview(a.cover);
+  else hideCoverPreview();
+  openEd();
+}
+
+function openEd() {
+  document.getElementById('artlistview').style.display = 'none';
+  document.getElementById('edview').style.display = 'block';
+  document.getElementById('esavemsg').style.display = 'none';
+  document.getElementById('etitle').focus();
+}
+
+function closeEd() {
+  document.getElementById('edview').style.display = 'none';
+  document.getElementById('artlistview').style.display = 'block';
+  renderArtList();
+}
+
+function saveArt() {
+  const title = document.getElementById('etitle').value.trim();
+  if (!title) { alert('Please enter a title.'); document.getElementById('etitle').focus(); return; }
+  const art = {
+    title,
+    cat: document.getElementById('ecat').value,
+    date: document.getElementById('edate').value.trim(),
+    read: document.getElementById('eread').value.trim(),
+    excerpt: document.getElementById('eexc').value.trim(),
+    tags: document.getElementById('etags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    body: parseBody(document.getElementById('ebody').value),
+    cover: pendingCover,
+    coverAlt: title
+  };
+  if (curIdx >= 0) D.articles[curIdx] = art;
+  else D.articles.unshift(art);
+  saveData();
+  refreshDash();
+  const msg = document.getElementById('esavemsg');
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display='none'; closeEd(); }, 1400);
+}
+
+function delArt(i) {
+  if (!confirm('Delete "' + (D.articles[i].title||'this article') + '"?\nThis cannot be undone.')) return;
+  D.articles.splice(i,1);
+  saveData();
+  renderArtList();
+  refreshDash();
+}
+
+/* ════════════════════════════
+   PHOTO UPLOAD — FIXED
+════════════════════════════ */
+function setupImgInput(inputId, onLoad) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    // Validate it's an image
+    if (!file.type.startsWith('image/')) { alert('Please choose an image file (JPG, PNG, WEBP).'); return; }
+    // Check size — warn if over 2MB
+    if (file.size > 4 * 1024 * 1024) { alert('This image is quite large. For best results, use a photo under 4MB.'); }
+    const reader = new FileReader();
+    reader.onload = function(ev) { onLoad(ev.target.result); };
+    reader.onerror = function() { alert('Could not read this image. Please try a different file.'); };
+    reader.readAsDataURL(file);
+    // reset input so same file can be re-selected
+    input.value = '';
+  });
+}
+
+function showCoverPreview(src) {
+  const prev = document.getElementById('covpreview');
+  const rem = document.getElementById('covremove');
+  const zone = document.getElementById('covzone');
+  prev.src = src;
+  prev.classList.remove('hide');
+  rem.classList.remove('hide');
+  zone.style.borderColor = 'var(--ag)';
+}
+
+function hideCoverPreview() {
+  const prev = document.getElementById('covpreview');
+  const rem = document.getElementById('covremove');
+  const zone = document.getElementById('covzone');
+  prev.src = '';
+  prev.classList.add('hide');
+  rem.classList.add('hide');
+  pendingCover = '';
+  zone.style.borderColor = '';
+}
+
+function removeImg() { hideCoverPreview(); }
+
+function showProfPreview(src) {
+  const img = document.getElementById('profimg');
+  const prev = document.getElementById('profprev');
+  const rem = document.getElementById('profremove');
+  const init = document.getElementById('profinit');
+  img.src = src; img.classList.add('show');
+  init.style.display = 'none';
+  prev.src = src; prev.classList.remove('hide');
+  rem.classList.remove('hide');
+}
+
+function removeProf() {
+  const img = document.getElementById('profimg');
+  const prev = document.getElementById('profprev');
+  const rem = document.getElementById('profremove');
+  const init = document.getElementById('profinit');
+  img.src=''; img.classList.remove('show');
+  prev.src=''; prev.classList.add('hide');
+  rem.classList.add('hide');
+  init.style.display='block';
+  D.authorPhoto = '';
+}
+
+/* ════════════════════════════
+   PROFILE
+════════════════════════════ */
+function loadProfileForm() {
+  document.getElementById('pname').value = D.authorName||'';
+  document.getElementById('prole').value = D.authorRole||'';
+  document.getElementById('pbio').value = D.authorBio||'';
+  const img = document.getElementById('profimg');
+  const init = document.getElementById('profinit');
+  const prev = document.getElementById('profprev');
+  const rem = document.getElementById('profremove');
+  if (D.authorPhoto) {
+    img.src = D.authorPhoto; img.classList.add('show');
+    init.style.display = 'none';
+    prev.src = D.authorPhoto; prev.classList.remove('hide');
+    rem.classList.remove('hide');
+  } else {
+    img.classList.remove('show'); img.src='';
+    init.style.display = 'block';
+    init.textContent = (D.authorName||'DT').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    prev.classList.add('hide');
+    rem.classList.add('hide');
+  }
+}
+
+function saveProfile() {
+  D.authorName = document.getElementById('pname').value.trim() || 'Davina Taddy';
+  D.authorRole = document.getElementById('prole').value.trim();
+  D.authorBio = document.getElementById('pbio').value.trim();
+  // photo is saved live via the input handler
+  saveData();
+  refreshDash();
+  flash('psaved');
+}
+
+/* ════════════════════════════
+   SETTINGS
+════════════════════════════ */
+function loadSettingsForm() {
+  document.getElementById('stag').value = D.tagline||'';
+  document.getElementById('ssc').value = D.scripture||'';
+  document.getElementById('sref').value = D.scriptureRef||'';
+  document.getElementById('snlh').value = D.nlH||'';
+  document.getElementById('snls').value = D.nlS||'';
+}
+
+function saveSettings() {
+  D.tagline = document.getElementById('stag').value;
+  D.scripture = document.getElementById('ssc').value;
+  D.scriptureRef = document.getElementById('sref').value;
+  D.nlH = document.getElementById('snlh').value;
+  D.nlS = document.getElementById('snls').value;
+  saveData();
+  flash('ssaved');
+}
+
+function changePw() {
+  const cur = document.getElementById('pwcur').value;
+  const nw = document.getElementById('pwnew').value;
+  const cn = document.getElementById('pwcon').value;
+  const msg = document.getElementById('pwmsg');
+  msg.style.display = 'inline';
+  if (cur !== D.password) { msg.textContent='Current password is wrong.'; msg.style.color='#F87171'; return; }
+  if (nw.length < 6) { msg.textContent='New password needs 6+ characters.'; msg.style.color='#F87171'; return; }
+  if (nw !== cn) { msg.textContent='Passwords do not match.'; msg.style.color='#F87171'; return; }
+  D.password = nw;
+  saveData();
+  msg.textContent='✓ Password changed!'; msg.style.color='#4ADE80';
+  ['pwcur','pwnew','pwcon'].forEach(id => document.getElementById(id).value='');
+  setTimeout(()=>msg.style.display='none', 2500);
+}
+
+/* ════════════════════════════
+   PUBLIC BLOG RENDER
+════════════════════════════ */
+function renderBlog() {
+  t('ptag', D.tagline);
+  t('psctext', D.scripture);
+  t('pscref', D.scriptureRef);
+  t('pabnm', D.authorName);
+  t('pabrole', D.authorRole);
+  t('pabbio', D.authorBio||'Add your bio in the dashboard.');
+  t('pnlh', D.nlH);
+  t('pnls', D.nlS);
+  t('pftcp', '© 2026 ' + D.authorName + ' · Abbah\'s pen');
+  // author photo
+  const avImg = document.getElementById('pabimg');
+  const avInit = document.getElementById('pabinit');
+  if (D.authorPhoto) { avImg.src=D.authorPhoto; avImg.style.display='block'; avInit.style.display='none'; }
+  else { avImg.style.display='none'; avInit.style.display='block'; avInit.textContent=(D.authorName||'DT').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2); }
+  // featured
+  renderLead();
+  renderCards();
+  // counts
+  [['Scripture Studies','cc0'],['Reflections','cc1'],['Essays','cc2'],['Prayers','cc3']].forEach(([cat,id])=>{
+    const n=D.articles.filter(a=>a.cat===cat).length;
+    t(id, n+' article'+(n!==1?'s':''));
+  });
+}
+
+function renderLead() {
+  const el = document.getElementById('plead');
+  const a = D.articles[0];
+  if (!a) { el.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--if);font-style:italic;">Your first article will appear here. Go to the dashboard to write one.</div>`; return; }
+  el.innerHTML = `
+    <div class="fimg" onclick="pshow(0)">
+      ${a.cover?`<img src="${a.cover}" alt=""/>`:`<div class="fimgph">✝</div>`}
+      <div class="fimlbl">${a.cat}</div>
+    </div>
+    <div>
+      <span class="fcat">${a.cat}</span>
+      <h2 class="ftitle" onclick="pshow(0)">${a.title}</h2>
+      <p class="fexc">${a.excerpt||''}</p>
+      <div class="fmeta"><span>${a.date||''}</span>${a.date?`<span class="dot">·</span>`:''}<span>By ${D.authorName}</span>${a.read?`<span class="dot">·</span><span>${a.read}</span>`:''}</div>
+      <span class="rlnk" onclick="pshow(0)">Read article →</span>
+    </div>`;
+}
+
+function renderCards() {
+  const el = document.getElementById('pcards');
+  const arts = D.articles.slice(1,4);
+  el.innerHTML = arts.map((a,i)=>`
+    <div class="pcard" onclick="pshow(${i+1})">
+      ${a.cover?`<img class="cimg" src="${a.cover}" alt=""/>`:`<div class="cimgph">✝</div>`}
+      <span class="fcat">${a.cat}</span>
+      <h3 class="ftitle">${a.title}</h3>
+      <p class="fexc">${a.excerpt||''}</p>
+      <div class="fmeta"><span>${a.date||''}</span>${a.read?`<span class="dot">·</span><span>${a.read}</span>`:''}</div>
+    </div>`).join('');
+}
+
+function renderArc(fil) {
+  const items = fil==='All'?D.articles:D.articles.filter(a=>a.cat===fil);
+  const el = document.getElementById('parclist');
+  if (!items.length) { el.innerHTML=`<div style="padding:3rem;text-align:center;color:var(--if);font-style:italic;">No articles in this category yet.</div>`; return; }
+  el.innerHTML = items.map(a=>{
+    const i=D.articles.indexOf(a);
+    return `<div class="arcrow" onclick="pshow(${i})">
+      ${a.cover?`<img class="arcth" src="${a.cover}" alt=""/>`:`<div class="arcthph">✝</div>`}
+      <div><span class="arccat">${a.cat}</span><div class="arctitle">${a.title}</div><div class="arcexc">${a.excerpt||''}</div><div class="arcdate">${a.date||''}</div></div>
+      <div class="arcrd">${a.read||''}</div>
+    </div>`;
+  }).join('');
+}
+
+function pshow(idx) {
+  pcurIdx=idx; const a=D.articles[idx]; if(!a) return;
+  t('pacat',a.cat);
+  document.getElementById('patitle').innerHTML = esc(a.title);
+  t('padate',a.date||'');
+  t('paread',a.read||'');
+  t('paauthor',D.authorName);
+  t('paanm',D.authorName);
+  t('paabio',D.authorBio||'');
+  const cv=document.getElementById('pacover');
+  cv.innerHTML=a.cover?`<img src="${a.cover}" alt=""/>`:`<div class="artcoverph">✝</div>`;
+  document.getElementById('pabody').innerHTML=a.body||'';
+  document.getElementById('patags').innerHTML=(a.tags||[]).map(tg=>`<span class="tag">${esc(tg)}</span>`).join('');
+  const av=document.getElementById('paaav');
+  av.innerHTML=D.authorPhoto?`<img src="${D.authorPhoto}" alt=""/>`:((D.authorName||'DT').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2));
+  document.getElementById('pmore').innerHTML=D.articles.filter((_,i)=>i!==idx).slice(0,3).map(o=>{
+    const oi=D.articles.indexOf(o);
+    return `<div class="pcard" onclick="pshow(${oi})">${o.cover?`<img class="cimg" src="${o.cover}" alt=""/>`:`<div class="cimgph">✝</div>`}<span class="fcat">${o.cat}</span><h3 class="ftitle">${o.title}</h3><p class="fexc">${o.excerpt||''}</p></div>`;
+  }).join('');
+  pprev=document.querySelector('.ppg.on').id.replace('p-','');
+  pgo('article');
+}
+
+/* ════════════════════════════
+   PUBLIC NAV
+════════════════════════════ */
+function pgo(pg){
+  document.querySelectorAll('.ppg').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+pg).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(pg==='archive') renderArc('All');
+}
+function pgoback(){pgo(pprev||'home');}
+function pfil(cat){pgo('archive');const b=Array.from(document.querySelectorAll('.filbtn')).find(x=>x.textContent.trim()===cat);if(b)psetfil(cat,b);}
+function psetfil(cat,btn){document.querySelectorAll('.filbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderArc(cat);}
+function pgoNL(){pgo('home');setTimeout(()=>document.getElementById('pnlbox').scrollIntoView({behavior:'smooth',block:'center'}),120);}
+function doSub(){const b=document.querySelector('.nlbtn');b.textContent='Thank you! You\'re subscribed ✦';b.style.background='#2D6A1F';b.style.color='#fff';}
+
+/* ════════════════════════════
+   MARKUP PARSER
+════════════════════════════ */
+function parseBody(txt){
+  if(!txt)return'';
+  return txt.split(/\n\n+/).map(b=>{
+    b=b.trim();if(!b)return'';
+    if(b.startsWith('## '))return`<h2>${esc(b.slice(3))}</h2>`;
+    if(b.startsWith('> '))return`<blockquote><p>${esc(b.slice(2))}</p></blockquote>`;
+    return`<p>${esc(b).replace(/\*(.*?)\*/g,'<em>$1</em>')}</p>`;
+  }).join('\n');
+}
+function rawBody(html){
+  if(!html)return'';
+  return html
+    .replace(/<h2>(.*?)<\/h2>/g,'## $1\n\n')
+    .replace(/<blockquote><p>(.*?)<\/p><\/blockquote>/g,'> $1\n\n')
+    .replace(/<p>(.*?)<\/p>/g,'$1\n\n')
+    .replace(/<em>(.*?)<\/em>/g,'*$1*')
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').trim();
+}
+
+/* ════════════════════════════
+   DOWNLOAD
+════════════════════════════ */
+function dlBlog() {
+  // Embed current data into a copy of this page
+  const tag = `<script id="__D__">try{localStorage.setItem('${STORE_KEY}',JSON.stringify(${JSON.stringify(D)}));}catch(e){}<\/script>`;
+  let h = document.documentElement.outerHTML;
+  h = h.replace(/<script id="__D__">[\s\S]*?<\/script>/g,'');
+  h = h.replace('</head>', tag+'</head>');
+  const bl = new Blob(['<!DOCTYPE html>'+h],{type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(bl);
+  a.download = 'ready-writer-blog.html';
+  a.click();
+}
+
+/* ════════════════════════════
+   UTILS
+════════════════════════════ */
+function t(id,txt){const e=document.getElementById(id);if(e)e.textContent=txt;}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function flash(id){const e=document.getElementById(id);if(!e)return;e.style.display='inline';setTimeout(()=>e.style.display='none',2200);}
+
+/* ════════════════════════════
+   INIT — wire up photo inputs
+════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  // Article cover photo
+  setupImgInput('covinput', function(src) {
+    pendingCover = src;
+    showCoverPreview(src);
+  });
+  // Profile photo
+  setupImgInput('profinput', function(src) {
+    D.authorPhoto = src;
+    saveData();
+    showProfPreview(src);
+    // update avatar initial display
+    document.getElementById('profinit').style.display = 'none';
+  });
+});
+
+refreshDash();
+</script>
+</body>
+</html>
